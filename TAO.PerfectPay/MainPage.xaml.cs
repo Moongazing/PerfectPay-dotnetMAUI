@@ -12,16 +12,30 @@ public partial class MainPage : ContentPage
     {
         InitializeComponent();
     }
-
+    private bool isDigit(string text)
+    {
+        foreach (char item in text)
+        {
+            if (!Char.IsNumber(item))
+            {
+                return false;
+            }
+        }
+            return true;
+        
+    }
     private async void txtBill_Completed(object sender, EventArgs e)
     {
         if (String.IsNullOrEmpty(txtBill.Text)) 
         {
             await DisplayAlert("Alert", "Please enter a bill.", "OK");
+            txtBill.Focus();
         }
-        if (Char.IsDigit(Convert.ToChar(txtBill.Text)))
+
+        if (!isDigit(txtBill.Text))
         {
             await DisplayAlert("Alert", "Please enter a digit.", "OK");
+            txtBill.Text = string.Empty;
         }
         
         bill = decimal.Parse(txtBill.Text);
